@@ -13,7 +13,7 @@ inquirer
         },
         {
             message: "Enter a project discription",
-            name: "discription",
+            name: "description",
         },
         {
             message: "What technologies did you use for this project?",
@@ -57,4 +57,29 @@ inquirer
             message: "Last Question! How would you like  to be contacted?",
             name: "contact",
         },
-    ]);
+    ])
+
+    .then(answers => {
+        //compile all the users answers
+        const { title, description, technologies, installationInstructions, usage, licenseList, licenseInfo, contribution, test, github, email, contact } = answers
+
+
+        // function to write README file
+        function generateMarkdown(answers) {
+            return `# ${title} \n ${description} \n ## Table of Contents \n * [Installation Instructions](#Installation-Instructions) \n * [Contribution Guidelines](#Contribution-Guidelines) \n * [Testing Instructions](#Testing-Instructions) \n * [Questions](#Questions) \n * [License](#License) \n ## Installation Instructions \n ${installationInstructions} \n ## Instructions for Use \n ${usage} \n ## Contribution Guidelines  \n ${contribution} \n ## Testing Instructions \n ${test} \n ## Questions  \n * Github Username: ${github} \n * Email: ${email} \n * How to contact: ${contact}`;
+        };
+
+        //
+        fs.writeFile('practiceREADME.md', generateMarkdown(answers), function (err) {
+            if (err) {
+                return console.log(err);
+            } else {
+                console.log("complete!")
+            }
+        });
+    });
+
+
+
+
+
